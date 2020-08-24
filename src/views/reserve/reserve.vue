@@ -248,7 +248,7 @@
     .ticket_box {
         display: flex;
         align-items: center;
-        margin-left: 20px;
+        margin-left: 15px;
     }
 
     .number {
