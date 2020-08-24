@@ -1,0 +1,130 @@
+html,
+body,
+#app {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    /* background-color: #96dd8d; */
+}
+
+body {
+    font-family: "Microsoft YaHei",
+        微软雅黑,
+        Arial,
+        "YuGothic",
+        "游ゴシック",
+        "ヒラギノ角ゴ Pro W3",
+        "Hiragino Kaku Gothic Pro",
+        "メイリオ", Meiryo, "ＭＳ Ｐゴシック",
+        "PT Sans",
+        sans-serif,
+        "Gulim",
+        "Apple Gothic";
+    font-size: 0.875rem;
+    line-height: 1.5;
+}
+
+ol,
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none
+}
+
+/*清除浮动*/
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+a {
+    text-decoration: none;
+}
+
+dd {
+    padding: 0;
+    margin: 0;
+}
+
+
+table {
+    border-collapse: collapse;
+}
+
+table,
+td,
+th {
+    border: 1px solid #0dbc79;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: normal;
+}
+
+img {
+    border: none;
+    vertical-align: middle;
+}
+
+.clearfix {
+    zoom: 1;
+}
+
+/* 清除内外边距 */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+blockquote,
+/* structural elements 结构元素 */
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+/* list elements 列表元素 */
+pre,
+/* text formatting elements 文本格式元素 */
+fieldset,
+lengend,
+button,
+input,
+textarea,
+/* form elements 表单元素 */
+th,
+td {
+    /* table elements 表格元素 */
+    margin: 0;
+    padding: 0;
+}
+
+/* 外围边框布局 */
+.border_box {
+    width: 100%;
+    /* height: 1462px; */
+    /* overflow: hidden; */
+    /* border: 1px solid blue; */
+}
+
+/* 版心布局 */
+.centre_box {
+    width: 980px;
+    margin: 0 auto;
+    /* background: rgba(255, 255, 255, 1); */
+    display: flex;
+    position: relative;
+}
