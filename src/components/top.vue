@@ -14,11 +14,11 @@
         <div class="top_translate">
           <ul>
             <el-breadcrumb separator-class="el-icon-caret-right">
-              <el-breadcrumb-item>> 日本語</el-breadcrumb-item>
-              <el-breadcrumb-item>> English</el-breadcrumb-item>
-              <el-breadcrumb-item>> 繁體中文</el-breadcrumb-item>
-              <el-breadcrumb-item>> 簡体中文</el-breadcrumb-item>
-              <el-breadcrumb-item>> 한국어</el-breadcrumb-item>
+              <el-breadcrumb-item>日本語</el-breadcrumb-item>
+              <el-breadcrumb-item>English</el-breadcrumb-item>
+              <el-breadcrumb-item>繁體中文</el-breadcrumb-item>
+              <el-breadcrumb-item>簡体中文</el-breadcrumb-item>
+              <el-breadcrumb-item>한국어</el-breadcrumb-item>
             </el-breadcrumb>
             <!-- <li>> 日本語</li>
           <li>> English</li>

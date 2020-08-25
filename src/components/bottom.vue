@@ -14,7 +14,8 @@
 
                         <div class="box_footer_bars">
                             <div class="box_footer_bars_img">
-                                <img src="@/assets/images/db.png" alt="">
+                                <img src="@/assets/images/logo_footer.png" alt="">
+                                <!-- <img src="https://www.kate.co.jp/scn/common/img/logo_footer.png" alt=""> -->
                             </div>
                             <div class="add">本社及临空营业所 〒598-0048 大阪府泉佐野市临空往来 北2番地12</div>
                             <ul>
@@ -38,14 +39,14 @@
                         <div class="box_footer_bars">
                             <div class="arrow">
                                 <div>
-                                    <img src="https://www.kate.co.jp/common/css/img/arrow04.png" alt="/">
+                                    <img src="@/assets/images/arrow04.png" alt="/">
                                 </div>
                                 <!-- <div>HOME</div> -->
                                 <a href="/">HOME</a>
                             </div>
                             <div class="arrow">
                                 <div class="arrow_img">
-                                    <img src="https://www.kate.co.jp/common/css/img/arrow04.png" alt="/">
+                                    <img src="@/assets/images/arrow04.png" alt="/">
                                 </div>
                                 <!-- <div>时刻表・车费</div> -->
                                 <a href="/">时刻表・车费</a>
@@ -89,14 +90,14 @@
                         <div class="box_footer_bars">
                             <div class="arrow">
                                 <div>
-                                    <img src="https://www.kate.co.jp/common/css/img/arrow04.png" alt="/">
+                                    <img src="@/assets/images/arrow04.png" alt="/">
                                 </div>
                                 <!-- <div>乘车处指南</div> -->
                                 <a href="/">乘车处指南</a>
                             </div>
                             <div class="arrow">
                                 <div>
-                                    <img src="https://www.kate.co.jp/common/css/img/arrow04.png" alt="/">
+                                    <img src="@/assets/images/arrow04.png" alt="/">
                                 </div>
                                 <!-- <div>乘车说明</div> -->
                                 <a href="/">乘车说明</a>
@@ -147,39 +148,40 @@
                                 </dd>
                             </dl>
                         </div>
+
                         <div class="box_footer_bars">
                             <div>
                                 <div class="arrow">
                                     <div>
-                                        <img src="https://www.kate.co.jp/common/css/img/arrow04.png" alt="/">
+                                        <img src="@/assets/images/arrow04.png" alt="/">
                                     </div>
                                     <!-- <div>常见问题</div> -->
                                     <a href="/">常见问题</a>
                                 </div>
                                 <div class="arrow">
                                     <div>
-                                        <img src="https://www.kate.co.jp/common/css/img/arrow04.png" alt="/">
+                                        <img src="@/assets/images/arrow04.png" alt="/">
                                     </div>
                                     <!-- <div>BESTCHOICE！KIX机场巴士</div> -->
                                     <a href="/">BESTCHOICE！KIX机场巴士</a>
                                 </div>
                                 <div class="arrow">
                                     <div>
-                                        <img src="https://www.kate.co.jp/common/css/img/arrow04.png" alt="/">
+                                        <img src="@/assets/images/arrow04.png" alt="/">
                                     </div>
                                     <!-- <div>包租巴士</div> -->
                                     <a href="/">包租巴士</a>
                                 </div>
                                 <div class="arrow">
                                     <div>
-                                        <img src="https://www.kate.co.jp/common/css/img/arrow04.png" alt="/">
+                                        <img src="@/assets/images/arrow04.png" alt="/">
                                     </div>
                                     <!-- <div>关西机场乘车处指南</div> -->
                                     <a href="/">关西机场乘车处指南</a>
                                 </div>
                                 <div class="arrow">
                                     <div>
-                                        <img src="https://www.kate.co.jp/common/css/img/arrow04.png" alt="/">
+                                        <img src="@/assets/images/arrow04.png" alt="/">
                                     </div>
                                     <!-- <div>信息咨询・失物招领</div> -->
                                     <a href="/">信息咨询・失物招领</a>
@@ -219,7 +221,6 @@
         </div>
 
     </div>
-
 </template>
 
 <script>
@@ -233,7 +234,7 @@
     }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss" scoped>
     .bottom_box {
         /* border: 1px solid gold; */
     }
@@ -265,8 +266,8 @@
     }
 
     ul li {
-        /* background-color: #ffffff; */
-        background-color: skyblue;
+        background-color: #ffffff;
+        /* background-color: skyblue; */
         text-align: center;
         margin-bottom: 10px;
         line-height: 30px;
@@ -329,8 +330,9 @@
     .bottom_bgcImg {
         background: url('../assets/images/bg_footer.png');
         background-size: cover;
-        min-height: 980px;
+        min-height: 690px;
         z-index: -99999;
+        padding-top: 200px;
     }
 
     /* 底部logo */
