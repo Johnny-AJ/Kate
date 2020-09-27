@@ -1,7 +1,8 @@
 export default {
   placeholder: {
-    destination: '出发地',
-    areaList: '终点站',
+    destination: '去机场',
+    areaList: '从机场出发',
+    PleaseSelectA: '请选择'
   },
   title: {
     Home: '首页',

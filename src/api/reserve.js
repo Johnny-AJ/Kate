@@ -4,7 +4,7 @@ import request from '../utils/myaxios'
 export function getAreaList(params) {
   return request({
     url: '/official/limujin/areaList',
-    methods: 'get',
+    method: 'get',
     params
   })
 }
@@ -12,17 +12,26 @@ export function getAreaList(params) {
 // 路线列表
 export function getLineList(params) {
   return request({
-    url: '/api/official/limujin/lineList',
-    methods: 'get',
+    url: '/official/limujin/lineList',
+    method: 'get',
     params
   })
 }
 
-// 产品列表
+// 路线下的产品列表
 export function getTicketList(params) {
   return request({
-    url: '/api/official/limujin/ticketList',
-    methods: 'get',
+    url: '/official/limujin/ticketList',
+    method: 'get',
     params
+  })
+}
+
+// 下单
+export function officialOrder(params) {
+  return request({
+    url: '/official/limujin/order',
+    method: 'post',
+    data: params
   })
 }

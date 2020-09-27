@@ -16,115 +16,126 @@
 
       <!-- 内容盒子 -->
       <div>
+        <keep-alive>
 
-        <!-- 关系机场 -->
-        <div class="reserve_nav">
-          <div class="reserve_left">
-            <div class="reserve_title">{{$t('ticket.KansaiAirport')}}</div>
-          </div>
-          <div class="reserve_select">
-            <el-select v-model="destination" :placeholder="$t('placeholder.destination')" style="width: 300px;">
-              <el-option v-for="item in destinationList" :key="item.label" :label="$t(item.label)" :value="item.label" @change="ChangeDestination">
-              </el-option>
-            </el-select>
-          </div>
-        </div>
+          <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
 
-        <!-- 选择区域 -->
-        <div class="reserve_nav">
-          <div class="reserve_left">
-            <div class="reserve_title">{{$t('ticket.SelectArea')}}</div>
-          </div>
-          <div class="reserve_select">
-            <el-select v-model="area" :placeholder="$t('placeholder.destination')" style="width: 300px;" @change="handleAreaChange">
-              <el-option v-for="item in areaList" :key="item.areaId" :label="item.areaName" :value="item.areaId">
-              </el-option>
-            </el-select>
-          </div>
-        </div>
+            <el-form-item prop="KansaiAirport">
+              <!-- 关系机场 -->
+              <div class="reserve_nav">
+                <div class="reserve_left">
+                  <div class="reserve_title">{{$t('ticket.KansaiAirport')}}</div>
+                </div>
+                <div class="reserve_select">
+                  <el-select v-model="ruleForm.KansaiAirport" :placeholder="$t('placeholder.destination')" style="width: 300px;" @change="ChangeDestination($event)" clearable>
+                    <el-option v-for="item in destinationList" :key="item.label" :label="$t(item.label)" :value="item.value">
+                    </el-option>
+                  </el-select>
+                </div>
+              </div>
+            </el-form-item>
 
-        <!-- 乘车路线 -->
-        <div class="reserve_nav">
-          <div class="reserve_left">
-            <div class="reserve_title">{{$t('ticket.BusLine')}}</div>
-          </div>
-          <div class="reserve_select">
-            <el-select v-model="bus" :placeholder="$t('placeholder.destination')" style="width: 750px;" @change="handleBusChange">
-              <el-option v-for="item in busList" :key="item.label" :label="item.label" :value="item.label">
-              </el-option>
-            </el-select>
+            <el-form-item prop="SelectArea">
+              <!-- 选择区域 -->
+              <div class="reserve_nav">
+                <div class="reserve_left">
+                  <div class="reserve_title">{{$t('ticket.SelectArea')}}</div>
+                </div>
+                <div class="reserve_select">
+                  <el-select v-model="ruleForm.SelectArea" :placeholder="$t('placeholder.PleaseSelectA')" style="width: 300px;" @change="handleAreaChange" clearable>
+                    <el-option v-for="item in areaList" :key="item.areaId" :label="item.areaName" :value="item.areaId">
+                    </el-option>
+                  </el-select>
+                </div>
+              </div>
+            </el-form-item>
 
-          </div>
-        </div>
+            <el-form-item prop="busLists">
+              <!-- 乘车路线 -->
+              <div class="reserve_nav">
+                <div class="reserve_left">
+                  <div class="reserve_title">{{$t('ticket.BusLine')}}</div>
+                </div>
+                <div class="reserve_select">
+                  <el-select v-model="ruleForm.busLists" :placeholder="$t('placeholder.PleaseSelectA')" style="width: 750px;" @change="handleBusChange" clearable>
+                    <el-option v-for="item in busList" :key="item.areaId" :label="item.lineName" :value="item.id">
+                    </el-option>
+                  </el-select>
 
-        <!-- 4 -->
-        <div class="reserve_nav">
-          <div class="reserve_left">
-            <div class="reserve_title">{{$t('ticket.TheNumberOfBus')}}</div>
-          </div>
-          <div class="adult">
-            <div class="fares">{{$t('ticket.Adult')}}：</div>
-            <div>
-              <el-input-number @change="handleChange" v-model="num" :min="1" :max="10" />
-            </div>
-          </div>
-          <div class="adult">
-            <div class="fares">{{$t('ticket.Children')}}：</div>
-            <div>
-              <el-input-number @change="handleChange" v-model="num1" :min="1" :max="10" />
-            </div>
-          </div>
-        </div>
+                </div>
+              </div>
+            </el-form-item>
 
-        <!-- 5 -->
-        <div class="ticket_nav">
-          <div class="reserve_left">
-            <div class="reserve_title">{{$t('ticket.TheTotalBus')}}</div>
-          </div>
-          <div class="ticket_box">
-            <div class="ticket_a">
-              <div class="ticket_z">
+            <!-- 4 -->
+            <div class="reserve_nav">
+              <div class="reserve_left">
+                <div class="reserve_title">{{$t('ticket.TheNumberOfBus')}}</div>
+              </div>
+              <div class="adult" v-if="!adult">
                 <div class="fares">{{$t('ticket.Adult')}}：</div>
-                <div class="number">X 1</div>
-                <div class="number">¥2680.00</div>
+                <div>
+                  <el-input-number :@change="handleChange" v-model="num" :min="1" :disabled="adult" :max="10" />
+                </div>
               </div>
-              <div class="ticket_z">
+              <div class="adult" v-if="!children">
                 <div class="fares">{{$t('ticket.Children')}}：</div>
-                <div class="number">X 1</div>
-                <div class="number">¥1680.00</div>
+                <div>
+                  <el-input-number :@change="handleChange" v-model="num1" :min="1" :disabled="children" :max="10" />
+                </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        <!-- 6 -->
-        <div class="reserve_nav">
-          <div class="reserve_left">
-            <div class="reserve_title">{{$t('ticket.TotalCosts')}}</div>
-          </div>
-          <div class="total_box">
-            <div class="total_price">
-              <div>
-                <div class="fares">{{$t('ticket.TheTotalAmountOf')}}：</div>
+            <!-- 5 -->
+            <div class="ticket_nav">
+              <div class="reserve_left">
+                <div class="reserve_title">{{$t('ticket.TheTotalBus')}}</div>
               </div>
-              <div>
-                <div class="number">X2</div>
-              </div>
-              <div>
-                <div class="number">¥4360.00</div>
+              <div class="ticket_box">
+                <div class="ticket_a">
+                  <div class="ticket_z" v-if="!adult">
+                    <div class="fares">{{$t('ticket.Adult')}}：</div>
+                    <div class="number" value='num'>X {{num}}</div>
+                    <div class="number">¥{{priceList[1] ?priceList[1] : adultNum}}</div>
+                  </div>
+                  <div class="ticket_z" v-if="!children">
+                    <div class="fares">{{$t('ticket.Children')}}：</div>
+                    <div class="number" value='num1'>X {{num1}}</div>
+                    <div class="number">¥{{priceList[2] ?priceList[2] :childrenNum}}</div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        <!-- 7 -->
-        <div class="btn">
-          <!-- <div class="next" @click="handleNext">Next</div> -->
-          <div>
-            <el-button class="next" @click="handleNext">{{$t('ticket.TheNextStep')}}</el-button>
-          </div>
-        </div>
+            <!-- 6 -->
+            <div class="reserve_nav">
+              <div class="reserve_left">
+                <div class="reserve_title">{{$t('ticket.TotalCosts')}}</div>
+              </div>
+              <div class="total_box">
+                <div class="total_price">
+                  <div>
+                    <div class="fares">{{$t('ticket.TheTotalAmountOf')}}：</div>
+                  </div>
+                  <div>
+                    <div class="number">X {{AmountOf}}</div>
+                  </div>
+                  <div>
+                    <div class="number">¥{{totalAll}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
+            <!-- 7 -->
+            <div class="btn">
+              <!-- <div class="next" @click="handleNext">Next</div> -->
+              <div>
+                <el-button class="next" @click="handleNext">{{$t('ticket.TheNextStep')}}</el-button>
+              </div>
+            </div>
+
+          </el-form>
+        </keep-alive>
       </div>
 
     </div>
@@ -139,94 +150,180 @@ import {
   getLineList,
   getTicketList
 } from "@/api/reserve"
-// import {
-//   treeDataTranslate
-// } from "@/utils/jtr"
+import store from "../../store/index"
 export default {
   name: "reserve",
   data() {
     return {
       destinationList: [{
-          value1: "选1",
+          value: 1,
           label: "placeholder.destination",
         },
         {
-          value1: "选2",
+          value: 2,
           label: "placeholder.areaList",
-        },
-      ],
-      options: [{
-          // value: '选项1',
-          label: "Agera",
-        },
-        {
-          // value: '选项2',
-          label: "LaFerrari",
-        },
-        {
-          // value: '选项3',
-          label: "Reventon",
         },
       ],
       destination: "", // 目的地
       area: "", // 区域
       bus: "", // 路线
-      num: "1",
-      num1: "1",
+      num: 0,
+      num1: 0,
+      KansaiAirport: "", // 关西机场   1-去机场  2-从机场出发
       areaList: [], // 区域
+      busList: [], // 乘车路线
       areaId: "", // 地区ID
       lineId: "", // 路线ID
-      busList: [{
-          // value: '选项6',
-          label: "大阪站前始发，经由南海难波站（深夜巴士）・茶屋町・新梅田シティ・新大阪・千里ニュータウン・千里中央",
-        },
-        {
-          // value: '选项6',
-          label: "京都站前始发，经由南海难波站（深夜巴士）・新大阪・千里ニュータウン・千里中央",
-        },
-        {
-          // value: '选项6',
-          label: "奈良站前始发，经由南海难波站（深夜巴士）・茶屋町・新梅田シティ",
-        },
-      ],
+      AmountOf: "0", // 总票数
+      ticketList: [], // 车票内容
+      typeList: [], // 票类型
+      children: true, // 儿童票
+      adult: true, // 成人票
+      adultNum: 0, // 成人价
+      childrenNum: 0, // 儿童价
+      totalAll: 0, // 总价
+      priceList: {}, // 票价格
+      infoId: [], // 产品编号
+      buyTicketInfoList: [],
+      adultprodNum: 0,
+      childrenprodNum: 0,
+      obj: {},
+      prodNum: {},
+      svj: [],
+      ruleForm: {
+        KansaiAirport: "",
+        SelectArea: "",
+        busLists: "",
+      },
+      rules: {
+        KansaiAirport: [{
+          required: true,
+          message: "请选择",
+          trigger: "blur",
+        }, ],
+        SelectArea: [{
+          required: true,
+          message: "请选择",
+          trigger: "blur",
+        }, ],
+        busLists: [{
+          required: true,
+          message: "请选择",
+          trigger: "blur",
+        }, ],
+      },
     }
   },
   created() {
     this.init()
   },
+  computed: {
+    handleChange(value) {
+      // console.log(this.adultprodNum, "num")
+      // console.log(this.childrenprodNum, "num1")
+      this.adultprodNum = this.num
+      this.childrenprodNum = this.num1
+      const prodNum = {
+        adult: this.adultprodNum,
+        children: this.childrenprodNum,
+      }
+      this.prodNum = prodNum
+      console.log(prodNum, "prodNum")
+      this.AmountOf = this.num + this.num1 // 总票数
+      if (this.adultNum) {
+        this.totalAll = this.num * this.priceList[1] // 成人价格
+      } else if (this.childrenNum) {
+        this.totalAll = this.num1 * this.priceList[2] // 儿童价格
+      } else {
+        this.totalAll = this.num * this.priceList[1] + this.num1 * this.priceList[2] // 总价
+      }
+    },
+  },
   methods: {
     // 計算器
-    handleChange(value) {
-      console.log(value)
-    },
+    // handleChange(value) {
+    //   this.AmountOf = this.num + this.num1 // 总票数
+    //   if (this.adultNum) {
+    //     this.totalAll = this.num * this.priceList[1] // 成人价格
+    //   } else if (this.childrenNum) {
+    //     this.totalAll = this.num1 * this.priceList[2] // 儿童价格
+    //   } else {
+    //     this.totalAll = this.num * this.priceList[1] + this.num1 * this.priceList[2] // 总价
+    //   }
+    // },
     // 下一步
-    handleNext(data) {
+    handleNext() {
       console.log("觸發成功")
-      const url = "/information"
-      this.$router.push({
-        path: url,
+      this.buyTicketInfoList.push(this.obj, this.prodNum)
+      this.$refs.ruleForm.validate((valid) => {
+        if (valid) {
+          this.$router.push({
+            path: "/information",
+            query: {
+              buyTicketInfoList: this.buyTicketInfoList,
+              lineId: this.lineId,
+            },
+          })
+        } else {
+          return false
+        }
       })
     },
     // 目的地
     ChangeDestination(val) {
-      console.log("目的地", val)
+      // console.log("目的地", val)
+      this.KansaiAirport = val // 路线类型
+      // console.log(this.KansaiAirport, "this.KansaiAirport")
     },
     // 选择区域
-    handleAreaChange(val) {
-      console.log(val, "val")
-      this.areaId = val
-      console.log(this.areaId, "areaId")
+    async handleAreaChange(val) {
+      // console.log(val, "val")
+      this.areaId = val // 区域ID
+      // console.log(this.areaId, "areaId")
       // 路线列表
-      getLineList({
+      let res = await getLineList({
         lan: localStorage.getItem("locale"), // 语言
         areaCode: this.areaId, // 地区ID
-      }).then((res) => {
-        console.log(res, "getLineList")
+        lineType: this.KansaiAirport, // 路线类型
       })
+      // console.log(res, "getLineList")
+      this.busList = res.data.data
+      // console.log(this.busList, "busList")
     },
     // 选择路线
-    handleBusChange(val) {
-      console.log(val)
+    async handleBusChange(val) {
+      // console.log(val, "选择路线")
+      this.lineId = val // 路线ID
+      // 路线下的产品列表
+      let res = await getTicketList({
+        lan: localStorage.getItem("locale"), // 语言
+        lineId: this.lineId, // 路线ID
+      })
+      this.ticketList = res.data.data
+      // console.log(this.ticketList,'ticketList')
+      this.ticketList.map((item) => {
+        this.typeList.push(item.lineTicketType)
+        this.priceList[item.lineTicketType] = item.price
+        const obj = {
+          infoId: item.infoId,
+          lineTicketType: item.lineTicketType,
+          price: item.price,
+        }
+        this.obj = obj
+        // this.svj.push(obj)
+        console.log(this.obj, "svj")
+      })
+      this.typeList.map((item) => {
+        // 1成人票，2儿童票
+        switch (item) {
+          case 1:
+            this.adult = false
+            break
+          case 2:
+            this.children = false
+            break
+        }
+      })
     },
     // 初始化
     init() {
@@ -234,20 +331,11 @@ export default {
       getAreaList({
         lan: localStorage.getItem("locale"), // 语言
       }).then((res) => {
-        console.log(res, "getAreaList")
         if (res.data.data) {
           this.areaList = res.data.data
-          console.log(this.areaList, "getAreaList")
-          console.log(this.areaId, "areaId")
+          // console.log(this.areaList, "getAreaList")
+          // console.log(this.areaId, "areaId")
         }
-      })
-
-      // 产品列表
-      getTicketList({
-        lan: localStorage.getItem("locale"), // 语言
-        lineId: "",
-      }).then((res) => {
-        console.log(res, "getTicketList")
       })
     },
   },
@@ -269,12 +357,18 @@ export default {
 .el-input-number {
   margin-left: 10px;
 }
+
+/deep/ .el-form-item__error {
+  top: 75%;
+  left: 180px;
+}
+
+/deep/ .el-form-item {
+  margin-bottom: 0;
+}
 </style><style lang="scss" scoped>
 /* 关西利木津路线列表  */
 .p31 {
-  /* width: 960px; */
-  /* height: 45px; */
-  /* background: rgba(255, 255, 255, 1); */
   border-bottom: 1px solid #ffe5e5e5;
   display: flex;
   align-items: center;
@@ -302,15 +396,11 @@ export default {
 
 /* reserve_box */
 .reserve_box {
-  /* width: 330px; */
   width: 100%;
-  /* border: 1px solid red; */
   margin-bottom: 117px;
 }
 
 h2 {
-  /* font-size: 18px; */
-  /* font-family: Taipei Sans TC Beta; */
   font-weight: 400;
   color: rgba(1, 49, 146, 1);
   margin-bottom: 16.5px;
@@ -326,9 +416,7 @@ h2 {
 
 .reserve_left {
   width: 150px;
-  /* height: 50px; */
   background: rgba(81, 177, 205, 1);
-  /* border: 1px solid; */
   border-left: 1px solid #ffd5d5d5;
   text-align: center;
   line-height: 80px;
@@ -367,8 +455,6 @@ h2 {
 
 .ticket_box {
   width: 80%;
-  /* display: flex; */
-  /* align-items: center; */
   margin-left: 20px;
 }
 
@@ -404,22 +490,17 @@ total_boxtotal_box {
 
 /* btn */
 .btn {
-  /* width: 580px; */
   height: 75px;
   background: rgba(255, 255, 255, 1);
   border: 1px solid rgba(213, 213, 213, 1);
   border-radius: 0px 0px 5px 5px;
   text-align: center;
-  /* margin: 17px 0; */
-  /* padding-top: 35px; */
-  /* margin: 0 auto; */
 }
 
 .next {
   background: rgba(1, 49, 146, 1);
   border-radius: 10px;
   text-align: center;
-  /* line-height: 40px; */
   font-size: 15px;
   font-family: Taipei Sans TC Beta;
   font-weight: 400;

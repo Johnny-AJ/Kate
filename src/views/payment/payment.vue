@@ -119,7 +119,7 @@
 
       <!-- 4 -->
       <div class="come">
-        <el-button class="back">← 返回</el-button>
+        <el-button class="back" @click="handleBack">← 返回</el-button>
       </div>
 
     </div>
@@ -135,6 +135,14 @@ export default {
     return {
       radio: "",
     }
+  },
+  methods: {
+    //   返回
+    handleBack() {
+      this.$router.push({
+        path: "/information",
+      })
+    },
   },
 }
 </script>
@@ -186,7 +194,7 @@ h2 {
 }
 
 .top_box {
-  border: 1px solid blue;
+  border: 1px solid #eee;
   margin-bottom: 25px;
 }
 
@@ -205,7 +213,6 @@ h2 {
 
 .time_min {
   display: flex;
-  padding-left: 15px;
   border-bottom: 1px solid #ffebebeb;
   line-height: 40px;
 }
@@ -216,6 +223,7 @@ h2 {
   font-weight: bold;
   color: rgba(0, 0, 0, 1);
   margin-right: 20px;
+  padding-left: 10px;
 }
 
 .min {
@@ -228,12 +236,7 @@ h2 {
 /* 4 */
 /* 运费 */
 .freight {
-  /* width: 540px; */
-  /* height: 59px; */
-  /* background: rgba(255, 255, 255, 1); */
-  /* border: 1px solid rgba(235, 235, 235, 1); */
   display: flex;
-  padding-left: 15px;
   border-bottom: 1px solid #ffebebeb;
 }
 
@@ -244,7 +247,6 @@ h2 {
 
 .asd {
   width: 90%;
-  /* display: flex; */
 }
 
 .zxc {
@@ -258,6 +260,7 @@ h2 {
   font-family: SF Pro Text;
   font-weight: bold;
   color: rgba(1, 49, 146, 1);
+  margin-right: 20px;
 }
 
 /* 5 */
@@ -304,7 +307,6 @@ h2 {
   display: flex;
   align-items: center;
   background: rgba(249, 249, 249, 1);
-  border: 1px solid rgba(235, 235, 235, 1);
   line-height: 65px;
 }
 

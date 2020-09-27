@@ -1,7 +1,8 @@
 export default {
   placeholder: {
-    destination: 'Place Of Departure',
-    areaList: 'Destination',
+    destination: 'Go to the airport',
+    areaList: 'Trigger from the airport',
+    PleaseSelectA: 'Please select a'
   },
   title: {
     Home: 'Home',

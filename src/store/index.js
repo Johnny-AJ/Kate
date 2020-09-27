@@ -5,8 +5,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    totalAll: ''
   },
   mutations: {
+    setTotalAll: (state, id) => {
+      state.totalAll = totalAll
+    }
   },
   actions: {
   },

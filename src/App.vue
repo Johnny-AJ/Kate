@@ -1,16 +1,19 @@
 <template>
-  <div id="app">
+<div id="app">
+  <keep-alive>
     <router-view />
-  </div>
+  </keep-alive>
+</div>
 </template>
+
 <script>
-  export default {
-    name: "App",
-    data() {
-      return {};
-    },
-  };
+export default {
+  name: "App",
+  data() {
+    return {}
+  },
+}
 </script>
+
 <style lang="scss" scoped>
-  
 </style>

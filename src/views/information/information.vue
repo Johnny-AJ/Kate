@@ -16,49 +16,59 @@
 
       <!-- 内容盒子 -->
       <div>
+        <el-form :model="ruleForm" :rules="rules" ref="ruleForm">
 
-        <!-- 1 -->
-        <div class="reserve_nav">
-          <div class="reserve_left">
-            <div class="reserve_title">客戶姓名</div>
-          </div>
-          <div class="reserve_select">
-            <el-input placeholder="请输入您的姓名" style="width: 500px;" />
-          </div>
-          <div>
-            <i class="el-icon-circle-plus"></i>
-          </div>
-        </div>
+          <!-- 1 -->
+          <el-form-item prop="UserName">
+            <div class="reserve_nav">
+              <div class="reserve_left">
+                <div class="reserve_title">客戶姓名</div>
+              </div>
+              <div class="reserve_select" @change="handleChangeUserName">
+                <el-input placeholder="请输入您的姓名" style="width: 500px;" clearable v-model="ruleForm.UserName" ref="username" maxlength="6" />
+              </div>
+              <div>
+                <i class="el-icon-circle-plus"></i>
+              </div>
+            </div>
+          </el-form-item>
 
-        <!-- 2 -->
-        <div class="reserve_nav">
-          <div class="reserve_left">
-            <div class="reserve_title">电子邮箱</div>
-          </div>
-          <div class="reserve_select">
-            <el-input placeholder="请输入您的邮箱号码" style="width: 500px;" />
-          </div>
-          <div class="con">必填</div>
-        </div>
+          <!-- 2 -->
+          <el-form-item prop="MailNumber">
+            <div class="reserve_nav">
+              <div class="reserve_left">
+                <div class="reserve_title">电子邮箱</div>
+              </div>
+              <div class="reserve_select" @change="handleChangeMailNumber">
+                <el-input placeholder="请输入您的邮箱号码" style="width: 500px;" clearable v-model="ruleForm.MailNumber" maxlength="20">
+                  <template slot="append">.com</template>
+                </el-input>
+              </div>
+              <div class="con">必填</div>
+            </div>
+          </el-form-item>
 
-        <!-- 3 -->
-        <div class="reserve_nav">
-          <div class="reserve_left">
-            <div class="reserve_title">电话号码</div>
-          </div>
-          <div class="reserve_select">
-            <el-input placeholder="请输入您的电号号码" style="width: 500px;" />
-          </div>
-        </div>
+          <!-- 3 -->
+          <el-form-item prop="PhoneNumber">
+            <div class="reserve_nav">
+              <div class="reserve_left">
+                <div class="reserve_title">电话号码</div>
+              </div>
+              <div class="reserve_select" @change="handleChangePhoneNumber">
+                <el-input placeholder="请输入您的电号号码" style="width: 500px;" clearable v-model="ruleForm.PhoneNumber" maxlength="11" />
+              </div>
+            </div>
+          </el-form-item>
 
-        <!-- 4 -->
-        <div class="btn">
-          <!-- <div class="next" @click="handleNext">Next</div> -->
-          <div>
-            <el-button class="next" @click="handleNext">Next</el-button>
+          <!-- 4 -->
+          <div class="btn">
+            <!-- <div class="next" @click="handleNext">Next</div> -->
+            <div>
+              <el-button class="next" @click="handleNext">Next</el-button>
+            </div>
           </div>
-        </div>
 
+        </el-form>
       </div>
 
       <div class="come">
@@ -77,19 +87,113 @@
 export default {
   name: "information",
   data() {
-    return {}
+    // 用户名
+    var idNumReg = /^[\u4e00-\u9fa5]{1,}$/
+    var validateIdNum = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error("用户名不能为空!!"))
+      }
+      setTimeout(() => {
+        if (!idNumReg.test(value)) {
+          callback(new Error("请输入正确的用户名"))
+        } else {
+          callback()
+        }
+      }, 500)
+    }
+    // 邮箱
+    var idemail = /^\w{3,}@\w{2,}\.(com|cn|net|com\.cn)$/
+    var validateIdNum1 = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error("邮箱不能为空!!"))
+      }
+      setTimeout(() => {
+        if (!idemail.test(value)) {
+          callback(new Error("请输入正确的邮箱"))
+        } else {
+          callback()
+        }
+      }, 500)
+    }
+    // 电话号码
+    var idphone = /^[1-9]\d{10}$/
+    var validateIdNum2 = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error("电话号码不能为空!!"))
+      }
+      setTimeout(() => {
+        if (!idphone.test(value)) {
+          callback(new Error("请输入正确的电话号码"))
+        } else {
+          callback()
+        }
+      }, 500)
+    }
+    return {
+      UserName: "", // 用户名
+      MailNumber: "", // 邮箱号码
+      PhoneNumber: "", // 电话号码
+      infoId: "",
+      totalAll: "",
+      ruleForm: {
+        UserName: "",
+        MailNumber: "",
+        PhoneNumber: "",
+      },
+      rules: {
+        UserName: [{
+          required: true,
+          validator: validateIdNum,
+          trigger: "blur",
+        }, ],
+        MailNumber: [{
+          required: true,
+          validator: validateIdNum1,
+          trigger: "blur",
+        }, ],
+        PhoneNumber: [{
+          required: true,
+          validator: validateIdNum2,
+          trigger: "blur",
+        }, ],
+      },
+    }
+  },
+  created() {
+    const buyTicketInfoList = this.$route.query.buyTicketInfoList
+    const lineId = this.$route.query.lineId
+    console.log(buyTicketInfoList, "buyTicketInfoList")
+    console.log(lineId, "lineId")
   },
   methods: {
-    handleNext() {
-      console.log("触发成功")
-      this.$router.push({
-        path: "/payment",
+    async handleNext() {
+      let res = await //   console.log("触发成功")
+      this.$refs.ruleForm.validate((valid) => {
+        if (valid) {
+          this.$router.push({
+            path: "/payment",
+          })
+        } else {
+          return false
+        }
       })
     },
     handleBack() {
       this.$router.push({
         path: "/reserve",
       })
+    },
+    handleChangeUserName() {
+      this.UserName = this.ruleForm.UserName
+      // console.log(this.UserName, "UserName")
+    },
+    handleChangeMailNumber() {
+      this.MailNumber = this.ruleForm.MailNumber
+      // console.log(this.MailNumber, "MailNumber")
+    },
+    handleChangePhoneNumber() {
+      this.PhoneNumber = this.ruleForm.PhoneNumber
+      // console.log(this.PhoneNumber, "PhoneNumber")
     },
   },
 }
@@ -101,6 +205,12 @@ export default {
   color: blue;
   font-size: 29px;
   margin-left: 10px;
+  margin-top: 10px;
+}
+
+/deep/ .el-form-item__error {
+  top: 75%;
+  left: 190px;
 }
 </style><style lang="scss" scoped>
 /* 关西利木津路线列表  */
