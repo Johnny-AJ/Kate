@@ -84,6 +84,9 @@
 </template>
 
 <script>
+import {
+  officialOrder
+} from "../../api/reserve"
 export default {
   name: "information",
   data() {
@@ -133,8 +136,8 @@ export default {
       UserName: "", // 用户名
       MailNumber: "", // 邮箱号码
       PhoneNumber: "", // 电话号码
-      infoId: "",
-      totalAll: "",
+      lineId: "",
+      buyTicketInfoList: [],
       ruleForm: {
         UserName: "",
         MailNumber: "",
@@ -160,39 +163,54 @@ export default {
     }
   },
   created() {
-    const buyTicketInfoList = this.$route.query.buyTicketInfoList
-    const lineId = this.$route.query.lineId
-    console.log(buyTicketInfoList, "buyTicketInfoList")
-    console.log(lineId, "lineId")
+    const buyTicketInfoList = this.$route.query.buyTicketInfoList // 购买产品信息
+    const lineId = this.$route.query.lineId // 路线ID
+    this.lineId = lineId
+    this.buyTicketInfoList = buyTicketInfoList
+    console.log(this.lineId, "this.lineId")
+    console.log(this.buyTicketInfoList, "this.buyTicketInfoList")
   },
   methods: {
     async handleNext() {
-      let res = await //   console.log("触发成功")
-      this.$refs.ruleForm.validate((valid) => {
-        if (valid) {
-          this.$router.push({
-            path: "/payment",
-          })
-        } else {
-          return false
-        }
+      var then = this
+      //   console.log("触发成功")
+      let res = await officialOrder({
+        name: then.UserName,
+        email: then.MailNumber,
+        phone: then.PhoneNumber,
+        lineId: then.lineId,
+        buyTicketInfoList: then.buyTicketInfoList,
       })
+      console.log(res, "res")
+      // this.$refs.ruleForm.validate((valid) => {
+      //   if (valid) {
+      //     this.$router.push({
+      //       path: "/payment",
+      //     })
+      //   } else {
+      //     return false
+      //   }
+      // })
     },
-    handleBack() {
+    async handleBack() {
+      var then = this
       this.$router.push({
         path: "/reserve",
       })
     },
     handleChangeUserName() {
-      this.UserName = this.ruleForm.UserName
-      // console.log(this.UserName, "UserName")
+      var then = this
+      then.UserName = this.ruleForm.UserName
+      console.log(then.UserName, "UserName")
     },
     handleChangeMailNumber() {
-      this.MailNumber = this.ruleForm.MailNumber
+      var then = this
+      then.MailNumber = then.ruleForm.MailNumber
       // console.log(this.MailNumber, "MailNumber")
     },
     handleChangePhoneNumber() {
-      this.PhoneNumber = this.ruleForm.PhoneNumber
+      var then = this
+      then.PhoneNumber = then.ruleForm.PhoneNumber
       // console.log(this.PhoneNumber, "PhoneNumber")
     },
   },

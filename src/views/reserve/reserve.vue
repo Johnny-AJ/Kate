@@ -187,9 +187,7 @@ export default {
       buyTicketInfoList: [],
       adultprodNum: 0,
       childrenprodNum: 0,
-      obj: {},
-      prodNum: {},
-      svj: [],
+      tempList: {},
       ruleForm: {
         KansaiAirport: "",
         SelectArea: "",
@@ -219,29 +217,39 @@ export default {
   },
   computed: {
     handleChange(value) {
+      var then = this
       // console.log(this.adultprodNum, "num")
-      // console.log(this.childrenprodNum, "num1")
-      this.adultprodNum = this.num
-      this.childrenprodNum = this.num1
+      // console.log(value, "num1")
+      then.adultprodNum = then.num
+      then.childrenprodNum = then.num1
       const prodNum = {
-        adult: this.adultprodNum,
-        children: this.childrenprodNum,
+        adult: then.adultprodNum,
+        children: then.childrenprodNum,
       }
-      this.prodNum = prodNum
-      console.log(prodNum, "prodNum")
-      this.AmountOf = this.num + this.num1 // 总票数
-      if (this.adultNum) {
-        this.totalAll = this.num * this.priceList[1] // 成人价格
+      then.prodNum = prodNum
+      then.AmountOf = then.num + then.num1 // 总票数
+      if (then.adultNum) {
+        then.totalAll = then.num * then.priceList[1] // 成人价格
       } else if (this.childrenNum) {
-        this.totalAll = this.num1 * this.priceList[2] // 儿童价格
+        then.totalAll = then.num1 * then.priceList[2] // 儿童价格
       } else {
-        this.totalAll = this.num * this.priceList[1] + this.num1 * this.priceList[2] // 总价
+        then.totalAll = then.num * then.priceList[1] + then.num1 * then.priceList[2] // 总价
       }
     },
   },
   methods: {
     // 計算器
     // handleChange(value) {
+    //   // console.log(this.adultprodNum, "num")
+    //   // console.log(value, "num1")
+    //   this.adultprodNum = this.num
+    //   this.childrenprodNum = this.num1
+
+    //   const prodNum = {
+    //     adult: this.adultprodNum,
+    //     children: this.childrenprodNum,
+    //   }
+    //   this.prodNum = prodNum
     //   this.AmountOf = this.num + this.num1 // 总票数
     //   if (this.adultNum) {
     //     this.totalAll = this.num * this.priceList[1] // 成人价格
@@ -251,17 +259,24 @@ export default {
     //     this.totalAll = this.num * this.priceList[1] + this.num1 * this.priceList[2] // 总价
     //   }
     // },
+
     // 下一步
     handleNext() {
+      var then = this
       console.log("觸發成功")
-      this.buyTicketInfoList.push(this.obj, this.prodNum)
-      this.$refs.ruleForm.validate((valid) => {
+      then.tempList[1].prodNum = then.adultprodNum
+      then.tempList[2].prodNum = then.childrenprodNum
+      for (let i in this.tempList) {
+        then.buyTicketInfoList.push(then.tempList[i])
+      }
+      console.log(this.buyTicketInfoList)
+      then.$refs.ruleForm.validate((valid) => {
         if (valid) {
-          this.$router.push({
+          then.$router.push({
             path: "/information",
             query: {
-              buyTicketInfoList: this.buyTicketInfoList,
-              lineId: this.lineId,
+              buyTicketInfoList: then.buyTicketInfoList,
+              lineId: then.lineId,
             },
           })
         } else {
@@ -271,56 +286,57 @@ export default {
     },
     // 目的地
     ChangeDestination(val) {
+      var then = this
       // console.log("目的地", val)
-      this.KansaiAirport = val // 路线类型
+      then.KansaiAirport = val // 路线类型
       // console.log(this.KansaiAirport, "this.KansaiAirport")
     },
     // 选择区域
     async handleAreaChange(val) {
+      var then = this
       // console.log(val, "val")
-      this.areaId = val // 区域ID
+      then.areaId = val // 区域ID
       // console.log(this.areaId, "areaId")
       // 路线列表
       let res = await getLineList({
         lan: localStorage.getItem("locale"), // 语言
-        areaCode: this.areaId, // 地区ID
-        lineType: this.KansaiAirport, // 路线类型
+        areaCode: then.areaId, // 地区ID
+        lineType: then.KansaiAirport, // 路线类型
       })
       // console.log(res, "getLineList")
-      this.busList = res.data.data
-      // console.log(this.busList, "busList")
+      then.busList = res.data.data
+      // console.log(then.busList, "busList")
     },
     // 选择路线
     async handleBusChange(val) {
+      var then = this
       // console.log(val, "选择路线")
-      this.lineId = val // 路线ID
+      then.lineId = val // 路线ID
       // 路线下的产品列表
       let res = await getTicketList({
         lan: localStorage.getItem("locale"), // 语言
-        lineId: this.lineId, // 路线ID
+        lineId: then.lineId, // 路线ID
       })
-      this.ticketList = res.data.data
-      // console.log(this.ticketList,'ticketList')
-      this.ticketList.map((item) => {
-        this.typeList.push(item.lineTicketType)
-        this.priceList[item.lineTicketType] = item.price
-        const obj = {
+      then.ticketList = res.data.data
+      // console.log(this.ticketList, "ticketList")
+      then.ticketList.map((item) => {
+        then.tempList[item.lineTicketType] = {
           infoId: item.infoId,
           lineTicketType: item.lineTicketType,
           price: item.price,
+          prodNum: 1,
         }
-        this.obj = obj
-        // this.svj.push(obj)
-        console.log(this.obj, "svj")
+        then.typeList.push(item.lineTicketType)
+        then.priceList[item.lineTicketType] = item.price
       })
-      this.typeList.map((item) => {
+      then.typeList.map((item) => {
         // 1成人票，2儿童票
         switch (item) {
           case 1:
-            this.adult = false
+            then.adult = false
             break
           case 2:
-            this.children = false
+            then.children = false
             break
         }
       })
