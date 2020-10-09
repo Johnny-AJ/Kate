@@ -230,7 +230,7 @@ export default {
       then.AmountOf = then.num + then.num1 // 总票数
       if (then.adultNum) {
         then.totalAll = then.num * then.priceList[1] // 成人价格
-      } else if (this.childrenNum) {
+      } else if (then.childrenNum) {
         then.totalAll = then.num1 * then.priceList[2] // 儿童价格
       } else {
         then.totalAll = then.num * then.priceList[1] + then.num1 * then.priceList[2] // 总价
@@ -266,10 +266,10 @@ export default {
       console.log("觸發成功")
       then.tempList[1].prodNum = then.adultprodNum
       then.tempList[2].prodNum = then.childrenprodNum
-      for (let i in this.tempList) {
+      for (let i in then.tempList) {
         then.buyTicketInfoList.push(then.tempList[i])
       }
-      console.log(this.buyTicketInfoList)
+      console.log(then.buyTicketInfoList)
       then.$refs.ruleForm.validate((valid) => {
         if (valid) {
           then.$router.push({
@@ -390,7 +390,7 @@ export default {
   align-items: center;
   line-height: 45px;
   box-sizing: border-box;
-  padding-left: 115px;
+  padding-left: 400px;
   margin-bottom: 60px;
 }
 

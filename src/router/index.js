@@ -51,6 +51,11 @@ const routes = [
         path: '/order',
         name: 'order',  // 订单信息
         component: () => import('@/views/order/order.vue')
+      },
+      {
+        path: '/success',
+        name: 'success',  // 订单成功信息
+        component: () => import('@/views/success/success.vue')
       }
     ]
   }

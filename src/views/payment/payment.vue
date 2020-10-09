@@ -113,7 +113,7 @@
       <!-- 3 -->
       <div class="btn_p">
         <el-button class="paid_p" style="width: 160px;">
-          <div class="vbn">确认支付</div>
+          <div class="vbn" @click="handlePayment">确认支付</div>
         </el-button>
       </div>
 
@@ -143,6 +143,10 @@ export default {
         path: "/information",
       })
     },
+    // 确认支付
+    handlePayment() {
+      console.log(1)
+    },
   },
 }
 </script>
@@ -161,7 +165,7 @@ export default {
   align-items: center;
   line-height: 45px;
   box-sizing: border-box;
-  padding-left: 115px;
+  padding-left: 400px;
   margin-bottom: 60px;
 }
 

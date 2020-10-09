@@ -136,8 +136,8 @@ export default {
       UserName: "", // 用户名
       MailNumber: "", // 邮箱号码
       PhoneNumber: "", // 电话号码
-      lineId: "",
-      buyTicketInfoList: [],
+      lineId: "", //  线路ID
+      buyTicketInfoListOrder: [], // 订单数据内容
       ruleForm: {
         UserName: "",
         MailNumber: "",
@@ -163,12 +163,12 @@ export default {
     }
   },
   created() {
-    const buyTicketInfoList = this.$route.query.buyTicketInfoList // 购买产品信息
+    const buyTicketInfoListOrder = this.$route.query.buyTicketInfoList // 购买产品信息
     const lineId = this.$route.query.lineId // 路线ID
     this.lineId = lineId
-    this.buyTicketInfoList = buyTicketInfoList
+    this.buyTicketInfoListOrder = buyTicketInfoListOrder
     console.log(this.lineId, "this.lineId")
-    console.log(this.buyTicketInfoList, "this.buyTicketInfoList")
+    console.log(this.buyTicketInfoListOrder, "this.buyTicketInfoListOrder")
   },
   methods: {
     async handleNext() {
@@ -179,13 +179,17 @@ export default {
         email: then.MailNumber,
         phone: then.PhoneNumber,
         lineId: then.lineId,
-        buyTicketInfoList: then.buyTicketInfoList,
+        buyTicketInfoList: then.buyTicketInfoListOrder,
       })
       console.log(res, "res")
-      // this.$refs.ruleForm.validate((valid) => {
+      // then.$refs.ruleForm.validate((valid) => {
       //   if (valid) {
-      //     this.$router.push({
+      //     then.$router.push({
       //       path: "/payment",
+      //       query: {
+      //         busOrderId: then.busOrderId, // 巴士订单ID
+      //         buyTicketInfoList: then.buyTicketInfoListOrder,
+      //       },
       //     })
       //   } else {
       //     return false
@@ -201,7 +205,7 @@ export default {
     handleChangeUserName() {
       var then = this
       then.UserName = this.ruleForm.UserName
-      console.log(then.UserName, "UserName")
+      // console.log(then.UserName, "UserName")
     },
     handleChangeMailNumber() {
       var then = this
@@ -241,7 +245,7 @@ export default {
   align-items: center;
   line-height: 45px;
   box-sizing: border-box;
-  padding-left: 115px;
+  padding-left: 400px;
   margin-bottom: 60px;
 }
 
